@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Category, MenuItem, User
 
 app = Flask(__name__)
-DB_NAME = 'sqlite:///itemCatalog.db'
+DB_NAME = 'sqlite:///itemCatalog.db?check_same_thread=False'
 
 # Connect to Database and create database session
 engine = create_engine(DB_NAME)
@@ -27,8 +27,8 @@ def categoryListJSON():
     return jsonify(categorys = [c.serialize for c in categorys])
 
 #JSON endpoint to view all items corresponding to a specific category id
-@app.route('/category/<int:category_id>/menu/JSON')
-@app.route('/category/<int:category_id>/menu/json')
+@app.route('/category/<int:category_id>/JSON')
+@app.route('/category/<int:category_id>/json')
 def categoryItemsJSON(category_id):
     #query a specific category from the id taken in
     category = session.query(Category).filter_by(id=category_id).one()
@@ -45,8 +45,8 @@ def categoryItemsJSON(category_id):
 @app.route('/category/<int:category_id>/menu/<int:menu_id>/json')
 def menuItemJson(category_id, menu_id):
     #query a specific menu item
-    menu_item = session.query(MenuItem).filter_by(menu_id).one()
-    return jsonify(a_menu_item = menu_item.serialize)
+    MENU_ITEM = session.query(MenuItem).filter_by(id=menu_id).one()
+    return jsonify(Item = [MENU_ITEM.serialize])
 
 
 #START SERVER ON PORT 5000
