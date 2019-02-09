@@ -25,14 +25,35 @@ session.add(User1)
 session.commit()
 
 #category 1
-catergory1 =  Category(user_id=1, name="Arms")
+catergory1 =  Category(user_id=1, name="Legs", id=1)
 session.add(catergory1)
 session.commit()
 
+#items for category1
+item1 = MenuItem(user_id=1, name="Squat Rack", description="Grow big legs witht this world class squat rack",
+                    price="$750.00", category=catergory1)
+session.add(item1)
+session.commit()
+
+item2 = MenuItem(user_id=1, name="Leg Press", description="Gain quad strength through pressing motions",
+                    price="$250.00", category=catergory1)
+session.add(item2)
+session.commit()
 
 #category 2
-catergory2 =  Category(user_id=1, name="Legs")
+catergory2 =  Category(user_id=1, name="Chest", id=2)
 session.add(catergory2)
 session.commit()
+
+#items for catgory 2
+item1 = MenuItem(user_id =1 , name = "Bench Press", description= "Get pecs through pressing with your chest",
+                            price="$350.00", category=catergory2)
+session.add(item1)
+session.commit()
+item2 = MenuItem(user_id =1 , name = "Incline Press", description= "Get Upper pecs through pressing with your chest",
+                            price="$370.00", category=catergory2)
+session.add(item2)
+session.commit()
+
 
 print "added items!"
