@@ -1,0 +1,26 @@
+Project 4 Breakdown:
+Add database 
+Populate Database
+Add json endpoints to view data
+Add basic html endpoints to view data
+Add google login
+Add CRUD functionality
+
+
+TO DO:
+Add google login BE functionality
+Add google login FE page
+add html page for login
+
+add BE functionality to create/edit/update categorys
+add BE functionality to create/edit/update items
+
+Add html page to display all categorys
+add html page to add/edit/delete categorys
+add html page to add/edit/delete items                       
+
+
+DONE:
+Add database 
+Populate Database
+Add json endpoints to view data

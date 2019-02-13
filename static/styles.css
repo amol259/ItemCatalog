@@ -1,0 +1,28 @@
+h1 {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 50px;
+    color: rgb(0,0,0);
+    font-weight: 100;
+    line-height: 1.6;
+}
+
+h2 {
+    font-size: 24px;
+    color: red;
+}
+
+.list-item {
+    font-size: 22 px;
+    text-align: left;
+}
+
+.title {
+    font-size: 300px;
+    color: red;
+
+    
+}
+.catergoryList {
+    background-color: #7fe17f;
+ 	padding: 20px;
+}
