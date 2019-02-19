@@ -187,7 +187,9 @@ def menuItemJson(category_id, menu_id):
     MENU_ITEM = session.query(MenuItem).filter_by(id=menu_id).one()
     return jsonify(Item = [MENU_ITEM.serialize])
 
-
+####################
+# HTML ENDPOINTS
+####################
 #Show all workout Catergories
 @app.route('/')
 @app.route('/category/')
@@ -198,73 +200,68 @@ def showCategorys():
     # if 'username' not in login_session:
     #     return render_template('catergoryMenu.html', restaurants=restaurants)
     # else:
-    return render_template('publicCategoryMenu.html', categorys=categorys)
+    return render_template('category.html', categorys=categorys)
 
 
-# Create a new restaurant
+# Create a new Category
+@app.route('/category/new/', methods=['GET', 'POST'])
+def newCategory():
+    # if 'username' not in login_session:
+    #     return redirect('/login')
+    if request.method == 'POST':
+        newCategory = Category(
+            name=request.form['name'], user_id=login_session['user_id'])
+        session.add(newCategory)
+        flash('New Restaurant %s Successfully Created' % newCategory.name)
+        session.commit()
+        return redirect(url_for('showCategorys'))
+    else:
+        return render_template('newCategory.html')
 
+# Edit a category
 
-# @app.route('/restaurant/new/', methods=['GET', 'POST'])
-# def newRestaurant():
-#     # if 'username' not in login_session:
-#     #     return redirect('/login')
-#     if request.method == 'POST':
-#         newRestaurant = Restaurant(
-#             name=request.form['name'], user_id=login_session['user_id'])
-#         session.add(newRestaurant)
-#         flash('New Restaurant %s Successfully Created' % newRestaurant.name)
-#         session.commit()
-#         return redirect(url_for('showRestaurants'))
-#     else:
-#         return render_template('newRestaurant.html')
-
-# Edit a restaurant
-
-
-# @app.route('/restaurant/<int:restaurant_id>/edit/', methods=['GET', 'POST'])
-# def editRestaurant(restaurant_id):
-#     editedRestaurant = session.query(
-#         Restaurant).filter_by(id=restaurant_id).one()
-#     # if 'username' not in login_session:
-#     #     return redirect('/login')
-#     if editedRestaurant.user_id != login_session['user_id']:
-#         return "<script>function myFunction() {alert('You are not authorized to edit this restaurant. Please create your own restaurant in order to edit.');}</script><body onload='myFunction()'>"
-#     if request.method == 'POST':
-#         if request.form['name']:
-#             editedRestaurant.name = request.form['name']
-#             flash('Restaurant Successfully Edited %s' % editedRestaurant.name)
-#             return redirect(url_for('showRestaurants'))
-#     else:
-#         return render_template('editRestaurant.html', restaurant=editedRestaurant)
+@app.route('/category/<int:category_id>/edit/', methods=['GET', 'POST'])
+def editCategory(category_id):
+    editedCategory = session.query(
+        Category).filter_by(id=category_id).one()
+    # if 'username' not in login_session:
+    #     return redirect('/login')
+    if editedCategory.user_id != login_session['user_id']:
+        return "<script>function myFunction() {alert('You are not authorized to edit this category_id. Please create your own Category in order to edit.');}</script><body onload='myFunction()'>"
+    if request.method == 'POST':
+        if request.form['name']:
+            editedCategory.name = request.form['name']
+            flash('Restaurant Successfully Edited %s' % editedCategory.name)
+            return redirect(url_for('showCategorys'))
+    else:
+        return render_template('editRestaurant.html', category_id=editedCategory)
 
 
 # # Delete a restaurant
-# @app.route('/restaurant/<int:restaurant_id>/delete/', methods=['GET', 'POST'])
-# def deleteRestaurant(restaurant_id):
-#     restaurantToDelete = session.query(
-#         Restaurant).filter_by(id=restaurant_id).one()
-#     if 'username' not in login_session:
-#         return redirect('/login')
-#     if restaurantToDelete.user_id != login_session['user_id']:
-#         return "<script>function myFunction() {alert('You are not authorized to delete this restaurant. Please create your own restaurant in order to delete.');}</script><body onload='myFunction()'>"
-#     if request.method == 'POST':
-#         session.delete(restaurantToDelete)
-#         flash('%s Successfully Deleted' % restaurantToDelete.name)
-#         session.commit()
-#         return redirect(url_for('showRestaurants', restaurant_id=restaurant_id))
-#     else:
-#         return render_template('deleteRestaurant.html', restaurant=restaurantToDelete)
+@app.route('/category/<int:category_id>/delete/', methods=['GET', 'POST'])
+def deleteCategory(category_id):
+    categoryToDelete = session.query(
+        Category).filter_by(id=category_id).one()
+    if 'username' not in login_session:
+        return redirect('/login')
+    if categoryToDelete.user_id != login_session['user_id']:
+        return "<script>function myFunction() {alert('You are not authorized to delete this restaurant. Please create your own restaurant in order to delete.');}</script><body onload='myFunction()'>"
+    if request.method == 'POST':
+        session.delete(categoryToDelete)
+        flash('%s Successfully Deleted' % categoryToDelete.name)
+        session.commit()
+        return redirect(url_for('showCategorys', category_id=category_id))
+    else:
+        return render_template('deleteRestaurant.html', restaurant=categoryToDelete)
 
-# # Show a restaurant menu
-
-
-# @app.route('/restaurant/<int:restaurant_id>/')
-# @app.route('/restaurant/<int:restaurant_id>/menu/')
-# def showMenu(restaurant_id):
-#     restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
+# # Show all items for a specific category
+# @app.route('/category/<int:category_id>/')
+# @app.route('/category/<int:category_id>/menu/')
+# def showMenu(category_id):
+#     category = session.query(Category).filter_by(id=category_id).one()
 #     creator = getUserInfo(restaurant.user_id)
 #     items = session.query(MenuItem).filter_by(
-#         restaurant_id=restaurant_id).all()
+#         category_id=category_id).all()
 #     if 'username' not in login_session or creator.id != login_session['user_id']:
 #         return render_template('publicmenu.html', items=items, restaurant=restaurant, creator=creator)
 #     else:
@@ -272,32 +269,32 @@ def showCategorys():
 
 
 # # Create a new menu item
-# @app.route('/restaurant/<int:restaurant_id>/menu/new/', methods=['GET', 'POST'])
-# def newMenuItem(restaurant_id):
+# @app.route('/restaurant/<int:category_id>/menu/new/', methods=['GET', 'POST'])
+# def newMenuItem(category_id):
 #     if 'username' not in login_session:
 #         return redirect('/login')
-#     restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
+#     restaurant = session.query(Restaurant).filter_by(id=category_id).one()
 #     if login_session['user_id'] != restaurant.user_id:
 #         return "<script>function myFunction() {alert('You are not authorized to add menu items to this restaurant. Please create your own restaurant in order to add items.');}</script><body onload='myFunction()'>"
 #         if request.method == 'POST':
 #             newItem = MenuItem(name=request.form['name'], description=request.form['description'], price=request.form[
-#                                'price'], course=request.form['course'], restaurant_id=restaurant_id, user_id=restaurant.user_id)
+#                                'price'], course=request.form['course'], category_id=category_id, user_id=restaurant.user_id)
 #             session.add(newItem)
 #             session.commit()
 #             flash('New Menu %s Item Successfully Created' % (newItem.name))
-#             return redirect(url_for('showMenu', restaurant_id=restaurant_id))
+#             return redirect(url_for('showMenu', category_id=category_id))
 #     else:
-#         return render_template('newmenuitem.html', restaurant_id=restaurant_id)
+#         return render_template('newmenuitem.html', category_id=category_id)
 
 # # Edit a menu item
 
 
-# @app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/edit', methods=['GET', 'POST'])
-# def editMenuItem(restaurant_id, menu_id):
+# @app.route('/restaurant/<int:category_id>/menu/<int:menu_id>/edit', methods=['GET', 'POST'])
+# def editMenuItem(category_id, menu_id):
 #     if 'username' not in login_session:
 #         return redirect('/login')
 #     editedItem = session.query(MenuItem).filter_by(id=menu_id).one()
-#     restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
+#     restaurant = session.query(Restaurant).filter_by(id=category_id).one()
 #     if login_session['user_id'] != restaurant.user_id:
 #         return "<script>function myFunction() {alert('You are not authorized to edit menu items to this restaurant. Please create your own restaurant in order to edit items.');}</script><body onload='myFunction()'>"
 #     if request.method == 'POST':
@@ -312,17 +309,17 @@ def showCategorys():
 #         session.add(editedItem)
 #         session.commit()
 #         flash('Menu Item Successfully Edited')
-#         return redirect(url_for('showMenu', restaurant_id=restaurant_id))
+#         return redirect(url_for('showMenu', category_id=category_id))
 #     else:
-#         return render_template('editmenuitem.html', restaurant_id=restaurant_id, menu_id=menu_id, item=editedItem)
+#         return render_template('editmenuitem.html', category_id=category_id, menu_id=menu_id, item=editedItem)
 
 
 # # Delete a menu item
-# @app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/delete', methods=['GET', 'POST'])
-# def deleteMenuItem(restaurant_id, menu_id):
+# @app.route('/restaurant/<int:category_id>/menu/<int:menu_id>/delete', methods=['GET', 'POST'])
+# def deleteMenuItem(category_id, menu_id):
 #     if 'username' not in login_session:
 #         return redirect('/login')
-#     restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
+#     restaurant = session.query(Restaurant).filter_by(id=category_id).one()
 #     itemToDelete = session.query(MenuItem).filter_by(id=menu_id).one()
 #     if login_session['user_id'] != restaurant.user_id:
 #         return "<script>function myFunction() {alert('You are not authorized to delete menu items to this restaurant. Please create your own restaurant in order to delete items.');}</script><body onload='myFunction()'>"
@@ -330,7 +327,7 @@ def showCategorys():
 #         session.delete(itemToDelete)
 #         session.commit()
 #         flash('Menu Item Successfully Deleted')
-#         return redirect(url_for('showMenu', restaurant_id=restaurant_id))
+#         return redirect(url_for('showMenu', category_id=category_id))
 #     else:
 #         return render_template('deleteMenuItem.html', item=itemToDelete)
 
