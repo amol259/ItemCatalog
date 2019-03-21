@@ -1,5 +1,8 @@
-Run in the following order:
+Project 4: Item Catalog
 
-1. database_setup.py
-2. dataitems.py
-3. project.py
+Important Files:
+project.py -  contains logic for majority of python code
+database_setup.py - Creates tables and relationships
+dataitems.py - populates db with some initial data
+template folder - all html code
+static - css file and image
