@@ -6,3 +6,8 @@ database_setup.py - Creates tables and relationships
 dataitems.py - populates db with some initial data
 template folder - all html code
 static - css file and image
+
+
+
+Tech:
+Python 2.7, POSTGRE SQL, HTML/CSS/JS
