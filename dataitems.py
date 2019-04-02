@@ -31,7 +31,7 @@ session.add(catergory1)
 session.commit()
 
 #items for category1
-item1 = MenuItem(user_id=1, name="Squat Rack", description="Grow big legs witht this world class squat rack",
+item1 = MenuItem(user_id=1, name="Squat Rack", description="Grow big legs with this world class squat rack",
                     price="$750.00", category=catergory1)
 session.add(item1)
 session.commit()

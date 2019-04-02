@@ -1,4 +1,8 @@
 Project 4: Item Catalog
+Run Instructions:
+Start the project by typing python project.py into the terminal.
+
+
 
 Important Files:
 project.py -  contains logic for majority of python code
@@ -8,6 +12,5 @@ template folder - all html code
 static - css file and image
 
 
-
-Tech:
+TECH:
 Python 2.7, POSTGRE SQL, HTML/CSS/JS

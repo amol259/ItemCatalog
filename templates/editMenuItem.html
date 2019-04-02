@@ -1,26 +1,26 @@
 <html>
 <head>
-<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles2.css') }}">
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='main.css') }}">
 	</head>
+	<body>
 
-<body>
+<h1> Edit Menu Item </h1>
 
-<h1> Edit Item: </h1>
+<form action="{{ url_for('editMenuItem',category_id = category_id, menu_id=item.id)}}" method = 'post'>
 
-
-<form action="{{ url_for('editMenuItem',category_id = category.id, menu_id = menu.id}}" method = 'post'>
-
-
-	<p>Item title:</p>
-		<input type ='text' size='30' name='name' placeholder = '{{menuItem.name }}'>
+<dl>
+    <dt>Name:</dt>
+      <dd><input type ='text' size='30' name='name'></dd>
+    <dt>Description:</dt>
+            <dd><textarea name = 'description' rows='5' cols='40'></textarea></dd>
+    <dt>Price($):</dt>
+            <dd><input type = 'text' size = '8' name='price'></dd>
+</dl>
 
 
 <input type='submit' value='Edit'>
 
-
-<a href = '{{url_for('showMenu')}}'> Cancel </a>
-
+<a href = "{{url_for('showMenu', category_id=category_id)}}"> Cancel </a>
 </form>
 </body>
-
 </html>

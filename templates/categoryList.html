@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body>
+    {% include "nav.html" %}
+
+<div class="pane">
+    <h1>
+        Categorys:
+    </h1>
+    <br>
+    <a href = "{{url_for('newCategory')}}">Create New Category</a>
+    <br>
+
+    {% for category in categorys %}
+    <a href = "{{url_for('showMenu', category_id = category.id)}}"> <p>{{category.name}}</p></a>
+    
+    <p><a href = "{{url_for('editCategory',category_id = category.id)}}">Edit Category</a></p>
+    
+    <p> <a href = "{{url_for('deleteCategory',category_id = category.id)}}">Delete Category</a> </p>
+    {% endfor %}
+
+</div>
+</body>
+</html>
