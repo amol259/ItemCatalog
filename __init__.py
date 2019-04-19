@@ -62,8 +62,7 @@ def fbconnect():
         response.headers['Content-Type'] = 'application/json'
         return response
     access_token = request.data
-    print "access token received %s " % access_token
-
+    # print "access token received %s " % access_token
     app_id = json.loads(open('fb_client_secrets.json', 'r').read())[
         'web']['app_id']
     app_secret = json.loads(
@@ -180,7 +179,7 @@ def gconnect():
     if result['issued_to'] != CLIENT_ID:
         response = make_response(
             json.dumps("Token's client ID does not match app's."), 401)
-        print "Token's client ID does not match app's."
+        # print "Token's client ID does not match app's."
         response.headers['Content-Type'] = 'application/json'
         return response
 
@@ -221,7 +220,7 @@ def gconnect():
     output += '<img src="'
     output += login_session['picture']
     output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '  # noqa
-    print "done!"
+    # print "done!"
     return output
 
 
@@ -289,7 +288,7 @@ def createUser(login_session):
 # Disconnect based on provider
 @app.route('/disconnect')
 def disconnect():
-    print login_session
+    print (login_session)
     if 'provider' in login_session:
         if login_session['provider'] == 'google':
             gdisconnect()
