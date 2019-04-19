@@ -15,7 +15,7 @@ import requests
 
 
 app = Flask(__name__)
-DB_NAME = 'sqlite:///itemCatalog.db?check_same_thread=False'
+DB_NAME = 'sqlite:///catalog.db?check_same_thread=False'
 
 # Connect to Database and create database session
 engine = create_engine(DB_NAME)
