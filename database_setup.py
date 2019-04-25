@@ -54,9 +54,9 @@ class MenuItem(Base):
             'price': self.price,
         }
 
-
 engine = create_engine('sqlite:///itemCatalog.db')
 # engine = create_engine('postgresql://catalog:PASSWORD@localhost/catalog')
+engine = create_engine('postgresql://catalog:password@localhost/catalog')
 
 
 Base.metadata.create_all(engine)

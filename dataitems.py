@@ -3,7 +3,9 @@ from sqlalchemy.orm import sessionmaker
 
 from database_setup import Category, Base, MenuItem, User
 
-engine = create_engine('sqlite:///itemCatalog.db')
+# engine = create_engine('sqlite:///itemCatalog.db')
+engine = create_engine('postgresql://catalog:password@localhost/catalog')
+
 # Bind the engine to the metadata of the Base class so that the
 # declaratives can be accessed through a DBSession instance
 Base.metadata.bind = engine
@@ -26,35 +28,35 @@ session.add(User1)
 session.commit()
 
 #category 1
-catergory1 =  Category(user_id=1, name="Legs", id=1)
-session.add(catergory1)
+Category1 =  Category(id=1, name="Legs", user_id=1)
+session.add(Category1)
 session.commit()
 
 #items for category1
 item1 = MenuItem(user_id=1, name="Squat Rack", description="Grow big legs with this world class squat rack",
-                    price="$750.00", category=catergory1)
+                    price="$750.00", category=Category1)
 session.add(item1)
 session.commit()
 
 item2 = MenuItem(user_id=1, name="Leg Press", description="Gain quad strength through pressing motions",
-                    price="$250.00", category=catergory1)
+                    price="$250.00", category=Category1)
 session.add(item2)
 session.commit()
 
 #category 2
-catergory2 =  Category(user_id=1, name="Chest", id=2)
-session.add(catergory2)
+Category2 =  Category(user_id=1, name="Chest", id=2)
+session.add(Category2)
 session.commit()
 
 #items for catgory 2
 item1 = MenuItem(user_id =1 , name = "Bench Press", description= "Get pecs through pressing with your chest",
-                            price="$350.00", category=catergory2)
+                            price="$350.00", category=Category2)
 session.add(item1)
 session.commit()
 item2 = MenuItem(user_id =1 , name = "Incline Press", description= "Get Upper pecs through pressing with your chest",
-                            price="$370.00", category=catergory2)
+                            price="$370.00", category=Category2)
 session.add(item2)
 session.commit()
 
 
-print "added items!"
+print ("added items!")

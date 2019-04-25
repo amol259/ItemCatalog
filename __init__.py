@@ -36,7 +36,9 @@ APPLICATION_NAME = "Item Catalog"
 app.secret_key = 'my unobvious secret key'
 
 # Connect to database
-engine = create_engine(DB_NAME)
+# engine = create_engine(DB_NAME)
+engine = create_engine('postgresql://catalog:password@localhost/catalog')
+
 Base.metadata.bind = engine
 
 # Create session
