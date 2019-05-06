@@ -29,8 +29,8 @@ session = DBSession()
 ###################
 
 # Google client_id
-CLIENT_ID = json.loads(
-    open('client_secrets.json', 'r').read())['web']['client_id']
+secret_file = json.loads(open('/var/www/FlaskApp/FlaskApp/client_secret.json', 'r').read())
+CLIENT_ID = secret_file['web']['client_id']
 APPLICATION_NAME = "Item Catalog"
 
 app.secret_key = 'my unobvious secret key'
@@ -148,7 +148,7 @@ def gconnect():
 
     try:
         # Upgrade the authorization code into a credentials object
-        oauth_flow = flow_from_clientsecrets('client_secrets.json', scope='')
+        oauth_flow = flow_from_clientsecrets('/var/www/FlaskApp/FlaskApp/client_secrets.json', scope='')
         oauth_flow.redirect_uri = 'postmessage'
         credentials = oauth_flow.step2_exchange(code)
     except FlowExchangeError:
