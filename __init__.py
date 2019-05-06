@@ -29,7 +29,7 @@ session = DBSession()
 ###################
 
 # Google client_id
-secret_file = json.loads(open('/var/www/FlaskApp/FlaskApp/client_secret.json', 'r').read())
+secret_file = json.loads(open('/var/www/FlaskApp/FlaskApp/client_secrets.json', 'r').read())
 CLIENT_ID = secret_file['web']['client_id']
 APPLICATION_NAME = "Item Catalog"
 
