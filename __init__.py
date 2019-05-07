@@ -223,7 +223,6 @@ def gconnect():
     output += login_session['picture']
     output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '  # noqa
     print ("done!")
-    showCategorys()
     return output
 
 
@@ -355,10 +354,10 @@ def menuItemJson(category_id, menu_id):
 @app.route('/')
 def showCategorys():
     categorys = session.query(Category).order_by(asc(Category.name))
-    if 'username' not in login_session:
+    # if 'username' not in login_session:
         return render_template('categoryList.html', categorys=categorys)
-    else:
-        return render_template('publicCategory.html', categorys=categorys)
+    # else:
+    #     return render_template('publicCategory.html', categorys=categorys)
 
 # Create a new Category
 @app.route('/category/new/', methods=['GET', 'POST'])
