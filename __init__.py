@@ -215,7 +215,7 @@ def gconnect():
 
     # see if user exists, if not create new user
     user_id = getUserID(login_session['email'])
-    print(session.get_items())
+    # print(session.get_items())
     if not user_id:
         user_id = createUser(login_session)
         print('user doesnt exist')
