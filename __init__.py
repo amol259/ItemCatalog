@@ -211,9 +211,11 @@ def gconnect():
     # see if user exists, if not create new user
     user_id = getUserID(login_session['email'])
     print('user exists')
+    print(user_id)
     if not user_id:
         user_id = createUser(login_session)
         print('user doesnt exist')
+        print(user_id)
     login_session['user_id'] = user_id
 
     output = ''
@@ -354,16 +356,16 @@ def menuItemJson(category_id, menu_id):
 @app.route('/')
 def showCategorys():
     categorys = session.query(Category).order_by(asc(Category.name))
-    if 'username' not in login_session:
-        return render_template('categoryList.html', categorys=categorys)
-    else:
-        return render_template('publicCategory.html', categorys=categorys)
+    # if 'username' not in login_session:
+    #     return render_template('categoryList.html', categorys=categorys)
+    # else:
+    return render_template('publicCategory.html', categorys=categorys)
 
 # Create a new Category
 @app.route('/category/new/', methods=['GET', 'POST'])
 def newCategory():
-    if 'username' not in login_session:
-        return redirect('/login')
+    # if 'username' not in login_session:
+    #     return redirect('/login')
     if request.method == 'POST':
         newCategory = Category(
             name=request.form['name'],
@@ -398,8 +400,8 @@ def editCategory(category_id):
 def deleteCategory(category_id):
     categoryToDelete = session.query(
         Category).filter_by(id=category_id).one()
-    if 'username' not in login_session:
-        return redirect('/login')
+    # if 'username' not in login_session:
+    #     return redirect('/login')
     if request.method == 'POST':
         session.delete(categoryToDelete)
         session.commit()
