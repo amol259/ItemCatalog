@@ -210,10 +210,10 @@ def gconnect():
 
     # see if user exists, if not create new user
     user_id = getUserID(login_session['email'])
-    print('user exists' + user_id)
+    print('user exists')
     if not user_id:
         user_id = createUser(login_session)
-        print('user doesnt exist' + user_id)
+        print('user doesnt exist')
     login_session['user_id'] = user_id
 
     output = ''
