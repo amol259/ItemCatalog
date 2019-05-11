@@ -1,30 +1,24 @@
 <head>
 
         <!--LOAD PRE-REQUISITES FOR GOOGLE SIGN IN -->
-      
-      
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
         <script>
           function start() {
             gapi.load('auth2', function() {
               auth2 = gapi.auth2.init({
-                client_id: '552561669325-44h9ov6950v6ka6dvmcugnlm8ijeas1d.apps.googleusercontent.com'
+                client_id: 'Y552561669325-44h9ov6950v6ka6dvmcugnlm8ijeas1d.apps.googleusercontent.com'
               });
             });
           }
-          </script>
+        </script>
       <!-- END PRE-REQUISITES FOR GOOGLE SIGN IN -->
       </head>
       
-      
       <body>  
-      
-      
       <!-- GOOGLE PLUS SIGN IN-->
       <button id="signinButton">Google Signin</button>
       <div id="result"></div>
-      
       <script>
         $('#signinButton').click(function() {
           function signInCallback(authResult){
@@ -40,7 +34,7 @@
                 success:function(result){
                   $('#result').html('Login Successful!</br>'+ result + '</br>Redirecting...')
                        setTimeout(function() {
-                        window.location.href = "/";
+                        window.location.href = "/category";
                        }, 2000);
                 },
                 processData:false,
@@ -48,14 +42,15 @@
               });
             } else{
               // handle error
-              print('There was an error: ' + authResult['error']);
+              console.log('There was an error: ' + authResult['error']);
               $('#result').html('Failed to make a server-side call. Check your configuration and console.');
             }
           }
           auth2.grantOfflineAccess().then(signInCallback);
         });
       </script>
-      
+
+
       
       
       <!--END GOOGLE PLUS SIGN IN -->
