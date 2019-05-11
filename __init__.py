@@ -141,15 +141,18 @@ def gconnect():
     if request.args.get('state') != login_session['state']:
         response = make_response(json.dumps('Invalid state parameter.'), 401)
         response.headers['Content-Type'] = 'application/json'
+        print(response)
         return response
     # Obtain authorization code
     code = request.data
+    print(code)
 
     try:
         # Upgrade the authorization code into a credentials object
         oauth_flow = flow_from_clientsecrets('/var/www/FlaskApp/FlaskApp/client_secrets.json', scope='')
         oauth_flow.redirect_uri = 'postmessage'
         credentials = oauth_flow.step2_exchange(code)
+        print(credentials)
     except FlowExchangeError:
         response = make_response(
             json.dumps('Failed to upgrade the authorization code.'), 401)
@@ -162,6 +165,7 @@ def gconnect():
            % access_token)
     h = httplib2.Http()
     result = json.loads(h.request(url, 'GET')[1])
+    print(result)
     # If there was an error in the access token info, abort.
     if result.get('error') is not None:
         response = make_response(json.dumps(result.get('error')), 500)
@@ -210,7 +214,6 @@ def gconnect():
 
     # see if user exists, if not create new user
     user_id = getUserID(login_session['email'])
-    print('user exists')
     print(user_id)
     if not user_id:
         user_id = createUser(login_session)
@@ -268,6 +271,7 @@ def gdisconnect():
 def getUserID(email):
     try:
         user = session.query(User).filter_by(email=email).one()
+        print('user exits')
         return user.id
     except:
         return None
