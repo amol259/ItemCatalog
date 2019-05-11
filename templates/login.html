@@ -40,7 +40,7 @@
                 success:function(result){
                   $('#result').html('Login Successful!</br>'+ result + '</br>Redirecting...')
                        setTimeout(function() {
-                        window.location.href = "/category";
+                        window.location.href = "/";
                        }, 2000);
                 },
                 processData:false,
@@ -48,7 +48,7 @@
               });
             } else{
               // handle error
-              console.log('There was an error: ' + authResult['error']);
+              print('There was an error: ' + authResult['error']);
               $('#result').html('Failed to make a server-side call. Check your configuration and console.');
             }
           }
